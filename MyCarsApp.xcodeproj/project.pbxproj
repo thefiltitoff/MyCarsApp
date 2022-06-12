@@ -14,6 +14,7 @@
 		2B2A5827285630EF005930B2 /* MyCarsApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B2A5825285630EF005930B2 /* MyCarsApp.xcdatamodeld */; };
 		2B2A5829285630F0005930B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B2A5828285630F0005930B2 /* Assets.xcassets */; };
 		2B2A582C285630F0005930B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B2A582A285630F0005930B2 /* LaunchScreen.storyboard */; };
+		2B2A58342856312B005930B2 /* data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B2A58332856312B005930B2 /* data.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		2B2A5828285630F0005930B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B2A582B285630F0005930B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B2A582D285630F0005930B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B2A58332856312B005930B2 /* data.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = data.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				2B2A581E285630EF005930B2 /* SceneDelegate.swift */,
 				2B2A5820285630EF005930B2 /* ViewController.swift */,
 				2B2A5822285630EF005930B2 /* Main.storyboard */,
+				2B2A58332856312B005930B2 /* data.plist */,
 				2B2A5828285630F0005930B2 /* Assets.xcassets */,
 				2B2A582A285630F0005930B2 /* LaunchScreen.storyboard */,
 				2B2A582D285630F0005930B2 /* Info.plist */,
@@ -130,6 +133,7 @@
 			files = (
 				2B2A582C285630F0005930B2 /* LaunchScreen.storyboard in Resources */,
 				2B2A5829285630F0005930B2 /* Assets.xcassets in Resources */,
+				2B2A58342856312B005930B2 /* data.plist in Resources */,
 				2B2A5824285630EF005930B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
