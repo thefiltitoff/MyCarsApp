@@ -23,7 +23,19 @@ class ViewController: UIViewController {
     
     var car: Car!
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segmentedControl: UISegmentedControl! {
+        didSet {
+            updateSegmantedCtrl()
+            segmentedControl.selectedSegmentTintColor = .white
+            
+            let whiteTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            let blackTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            
+            UISegmentedControl.appearance().setTitleTextAttributes(whiteTitleTextAttributes, for: .normal)
+            UISegmentedControl.appearance().setTitleTextAttributes(blackTitleTextAttributes, for: .selected)
+        }
+    }
+    
     @IBOutlet weak var markLabel: UILabel!
     @IBOutlet weak var modelLabel: UILabel!
     @IBOutlet weak var carImageView: UIImageView!
@@ -36,17 +48,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
      //   getDataFromFile()
         
-        let fetchRequest: NSFetchRequest<Car> = Car.fetchRequest()
-        let mark = segmentedControl.titleForSegment(at: 0)
-        fetchRequest.predicate = NSPredicate(format: "mark == %@", mark!)
         
-        do {
-            let results = try context.fetch(fetchRequest)
-            car = results.first
-            insertDataFrom(selectedCar: car!)
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
     }
     
     private func insertDataFrom(selectedCar car: Car) {
@@ -129,8 +131,22 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func segmentedCtrlPressed(_ sender: UISegmentedControl) {
+    private func updateSegmantedCtrl() {
+        let fetchRequest: NSFetchRequest<Car> = Car.fetchRequest()
+        let mark = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)
+        fetchRequest.predicate = NSPredicate(format: "mark == %@", mark!)
         
+        do {
+            let results = try context.fetch(fetchRequest)
+            car = results.first
+            insertDataFrom(selectedCar: car!)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
+    @IBAction func segmentedCtrlPressed(_ sender: UISegmentedControl) {
+        updateSegmantedCtrl()
     }
     
     @IBAction func startEnginePressed(_ sender: UIButton) {
