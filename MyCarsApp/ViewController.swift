@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         return df
     }()
     
+    var car: Car!
+    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var markLabel: UILabel!
     @IBOutlet weak var modelLabel: UILabel!
@@ -32,7 +34,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getDataFromFile()
+     //   getDataFromFile()
         
         let fetchRequest: NSFetchRequest<Car> = Car.fetchRequest()
         let mark = segmentedControl.titleForSegment(at: 0)
@@ -40,13 +42,23 @@ class ViewController: UIViewController {
         
         do {
             let results = try context.fetch(fetchRequest)
-            let car = results.first
-            
-            insertDataFron(selectedCar: car!)
+            car = results.first
+            insertDataFrom(selectedCar: car!)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+    }
+    
+    private func insertDataFrom(selectedCar car: Car) {
+        carImageView.image = UIImage(data: car.imageData!)
+        markLabel.text = car.mark
+        modelLabel.text = car.model
+        myChoiceImageView.isHidden = !(car.myChoice)
+        ratingLabel.text = "Rating: \(car.rating) / 10"
+        numberOfTripsLabel.text = "Number of trips: \(car.timesDriven)"
         
+        lastTimeStartedLabel.text = "Last time started: \(dateFormatter.string(from: car.lastStarted!))"
+        segmentedControl.backgroundColor = car.tintColor as? UIColor
     }
     
     private func getDataFromFile() {
@@ -57,22 +69,22 @@ class ViewController: UIViewController {
         
         do {
             records = try context.count(for: fetchRequest)
-            print("Is data there already?")
+            print("Is Data there already?")
         } catch let error as NSError {
             print(error.localizedDescription)
         }
         
         guard records == 0 else { return }
         
-        guard let pathtoFile = Bundle.main.path(forResource: "data", ofType: ".plist"),
-              let dataArray = NSArray(contentsOfFile: pathtoFile) else { return }
+        
+        guard let pathToFile = Bundle.main.path(forResource: "data", ofType: "plist"),
+            let dataArray = NSArray(contentsOfFile: pathToFile) else { return }
         
         for dictionary in dataArray {
-            guard let entity = NSEntityDescription.entity(forEntityName: "Car", in: context) else { return }
-            let car = NSManagedObject(entity: entity, insertInto: context) as! Car
+            let entity = NSEntityDescription.entity(forEntityName: "Car", in: context)
+            let car = NSManagedObject(entity: entity!, insertInto: context) as! Car
             
-            let carDictionary = dictionary as! [String: AnyObject]
-            
+            let carDictionary = dictionary as! [String : AnyObject]
             car.mark = carDictionary["mark"] as? String
             car.model = carDictionary["model"] as? String
             car.rating = carDictionary["rating"] as! Double
@@ -80,46 +92,41 @@ class ViewController: UIViewController {
             car.timesDriven = carDictionary["timesDriven"] as! Int16
             car.myChoice = carDictionary["myChoice"] as! Bool
             
-            guard let imageName = carDictionary["imageName"] as? String else { return }
-            let image = UIImage(named: imageName)
-            
-            let imageData = image?.pngData()
+            let imageName = carDictionary["imageName"] as? String
+            let image = UIImage(named: imageName!)
+            let imageData = image!.pngData()
             car.imageData = imageData
             
             if let colorDictionary = carDictionary["tintColor"] as? [String : Float] {
                 car.tintColor = getColor(colorDictionary: colorDictionary)
             }
-            
         }
-        
-        
     }
     
     private func getColor(colorDictionary: [String : Float]) -> UIColor {
         guard let red = colorDictionary["red"],
-              let green = colorDictionary["green"],
-              let blue = colorDictionary["blue"]
-        else { return UIColor() }
-        
-        return UIColor(
-            red: CGFloat(red / 255),
-            green: CGFloat(green / 255),
-            blue: CGFloat(blue / 255),
-            alpha: 1.0
-        )
+            let green = colorDictionary["green"],
+            let blue = colorDictionary["blue"] else { return UIColor() }
+        return UIColor(red: CGFloat(red / 255), green: CGFloat(green / 255), blue: CGFloat(blue / 255), alpha: 1.0)
     }
     
-    private func insertDataFron(selectedCar car: Car) {
-        carImageView.image = UIImage(data: car.imageData!)
-        markLabel.text = car.mark
-        modelLabel.text = car.model
-        myChoiceImageView.isHidden = !(car.myChoice)
-        ratingLabel.text = "Rating: \(car.rating) / 10"
-        numberOfTripsLabel.text = "Number of trips: \(car.timesDriven)"
+    private func update(rating: Double) {
+        car.rating = rating
         
-        lastTimeStartedLabel.text = "Last time started: \(dateFormatter.string(from: car.lastStarted!))"
-        
-        segmentedControl.tintColor = car.tintColor as? UIColor
+        do {
+            try context.save()
+            insertDataFrom(selectedCar: car)
+        } catch let error as NSError {
+            let alertController = UIAlertController(title: "Wrong value", message: "Wrong input", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            
+            alertController.addAction(okAction)
+            
+            present(alertController, animated: true)
+            
+            print(error.localizedDescription)
+        }
     }
     
     @IBAction func segmentedCtrlPressed(_ sender: UISegmentedControl) {
@@ -127,10 +134,35 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startEnginePressed(_ sender: UIButton) {
+        car.timesDriven += 1
+        car.lastStarted = Date()
         
+        do {
+            try context.save()
+            insertDataFrom(selectedCar: car)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
     }
     
     @IBAction func rateItPressed(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Rate it", message: "Rate it, please", preferredStyle: .alert)
+        let rateAction = UIAlertAction(title: "Rate", style: .default) { action in
+            if let text = alertController.textFields?.first?.text {
+                self.update(rating: (text as NSString).doubleValue)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        
+        alertController.addTextField { textField in
+            textField.keyboardType = .numberPad
+        }
+        
+        alertController.addAction(rateAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
         
     }
 }
