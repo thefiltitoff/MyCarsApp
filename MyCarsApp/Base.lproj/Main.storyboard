@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -108,6 +109,18 @@
                                     <action selector="segmentedCtrlPressed:" destination="HmN-EN-nsS" eventType="valueChanged" id="c0g-aG-70O"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ld5-0k-CyF">
+                                <rect key="frame" x="193" y="792.5" width="28" height="29.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="star" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="myChoicePressed" destination="HmN-EN-nsS" eventType="touchUpInside" id="Fca-Th-kRZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="U6e-lK-7Oo"/>
                         <color key="backgroundColor" red="0.99492442609999998" green="0.99004387859999998" blue="0.98989319799999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -127,8 +140,10 @@
                             <constraint firstItem="nXm-Or-NQi" firstAttribute="width" secondItem="T2R-zZ-UsO" secondAttribute="height" multiplier="19:75" id="LjH-AM-Zqz"/>
                             <constraint firstItem="iBk-7s-mWl" firstAttribute="top" secondItem="BQC-PD-obV" secondAttribute="bottom" constant="8" id="Lld-I4-gO4"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="S3n-vL-jFx" secondAttribute="trailing" id="MWF-QL-3yb"/>
+                            <constraint firstItem="U6e-lK-7Oo" firstAttribute="bottom" secondItem="ld5-0k-CyF" secondAttribute="bottom" constant="40" id="OTR-XA-ukU"/>
                             <constraint firstItem="VhZ-NO-ZZc" firstAttribute="top" secondItem="uYB-Xi-V3Q" secondAttribute="bottom" constant="16" id="OhI-H9-Nzr"/>
                             <constraint firstItem="cS9-Ux-K91" firstAttribute="top" secondItem="dRP-kl-fQr" secondAttribute="bottom" constant="33" id="PeQ-Yl-kEr"/>
+                            <constraint firstItem="ld5-0k-CyF" firstAttribute="centerX" secondItem="T2R-zZ-UsO" secondAttribute="centerX" id="bdg-d5-DBX"/>
                             <constraint firstItem="6Gb-ZO-wZH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="T2R-zZ-UsO" secondAttribute="leading" constant="20" symbolic="YES" id="cBN-T2-GYP"/>
                             <constraint firstItem="S3n-vL-jFx" firstAttribute="leading" secondItem="T2R-zZ-UsO" secondAttribute="leading" constant="16" id="dv3-iq-Rci"/>
                             <constraint firstItem="cS9-Ux-K91" firstAttribute="centerX" secondItem="dRP-kl-fQr" secondAttribute="centerX" id="ecP-GG-ckF"/>
@@ -151,6 +166,7 @@
                         <outlet property="lastTimeStartedLabel" destination="BQC-PD-obV" id="diz-52-qxW"/>
                         <outlet property="markLabel" destination="nXm-Or-NQi" id="vd9-Sr-qXW"/>
                         <outlet property="modelLabel" destination="dRP-kl-fQr" id="lAG-Js-tHJ"/>
+                        <outlet property="myChoiceButton" destination="ld5-0k-CyF" id="zYS-r5-cCd"/>
                         <outlet property="myChoiceImageView" destination="VhZ-NO-ZZc" id="9L2-TX-IHi"/>
                         <outlet property="numberOfTripsLabel" destination="iBk-7s-mWl" id="Ij0-uk-a9U"/>
                         <outlet property="ratingLabel" destination="6Gb-ZO-wZH" id="wJC-Ez-po0"/>
@@ -159,12 +175,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PF6-3J-hKw" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="448.80000000000001" y="352.17391304347831"/>
+            <point key="canvasLocation" x="447.82608695652175" y="351.5625"/>
         </scene>
     </scenes>
     <resources>
         <image name="button" width="112" height="32"/>
         <image name="lamborginiMurcielago" width="210" height="101"/>
         <image name="myChoice" width="150" height="150"/>
+        <image name="star" catalog="system" width="128" height="116"/>
     </resources>
 </document>

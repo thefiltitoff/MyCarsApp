@@ -13,6 +13,7 @@ import CoreData
 class ViewController: UIViewController {
     
     var context: NSManagedObjectContext!
+    var car: Car!
     
     lazy var dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -20,8 +21,6 @@ class ViewController: UIViewController {
         df.timeZone = .none
         return df
     }()
-    
-    var car: Car!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl! {
         didSet {
@@ -43,14 +42,66 @@ class ViewController: UIViewController {
     @IBOutlet weak var numberOfTripsLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var myChoiceImageView: UIImageView!
+    @IBOutlet var myChoiceButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+    // Uncomment fo first starting app
      //   getDataFromFile()
+    }
+    
+    @IBAction func segmentedCtrlPressed(_ sender: UISegmentedControl) {
+        updateSegmantedCtrl()
+    }
+    
+    @IBAction func startEnginePressed(_ sender: UIButton) {
+        car.timesDriven += 1
+        car.lastStarted = Date()
         
+        do {
+            try context.save()
+            insertDataFrom(selectedCar: car)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
+    @IBAction func rateItPressed(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Rate it", message: "Rate it, please", preferredStyle: .alert)
+        let rateAction = UIAlertAction(title: "Rate", style: .default) { action in
+            if let text = alertController.textFields?.first?.text {
+                self.update(rating: (text as NSString).doubleValue)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        
+        alertController.addTextField { textField in
+            textField.keyboardType = .numberPad
+        }
+        
+        alertController.addAction(rateAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
         
     }
     
+    @IBAction func myChoicePressed() {
+        car.myChoice.toggle()
+        
+        do {
+            try context.save()
+            insertDataFrom(selectedCar: car)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+}
+
+// MARK: Private methods
+extension ViewController {
     private func insertDataFrom(selectedCar car: Car) {
         carImageView.image = UIImage(data: car.imageData!)
         markLabel.text = car.mark
@@ -61,6 +112,12 @@ class ViewController: UIViewController {
         
         lastTimeStartedLabel.text = "Last time started: \(dateFormatter.string(from: car.lastStarted!))"
         segmentedControl.backgroundColor = car.tintColor as? UIColor
+        
+        if car.myChoice {
+            myChoiceButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        } else {
+            myChoiceButton.setImage(UIImage(systemName: "star"), for: .normal)
+        }
     }
     
     private func getDataFromFile() {
@@ -143,43 +200,6 @@ class ViewController: UIViewController {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-    }
-    
-    @IBAction func segmentedCtrlPressed(_ sender: UISegmentedControl) {
-        updateSegmantedCtrl()
-    }
-    
-    @IBAction func startEnginePressed(_ sender: UIButton) {
-        car.timesDriven += 1
-        car.lastStarted = Date()
-        
-        do {
-            try context.save()
-            insertDataFrom(selectedCar: car)
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-    }
-    
-    @IBAction func rateItPressed(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Rate it", message: "Rate it, please", preferredStyle: .alert)
-        let rateAction = UIAlertAction(title: "Rate", style: .default) { action in
-            if let text = alertController.textFields?.first?.text {
-                self.update(rating: (text as NSString).doubleValue)
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
-        
-        alertController.addTextField { textField in
-            textField.keyboardType = .numberPad
-        }
-        
-        alertController.addAction(rateAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true)
-        
     }
 }
 
