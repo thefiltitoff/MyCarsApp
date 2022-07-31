@@ -60,17 +60,57 @@
 		2B2A581B285630EF005930B2 /* MyCarsApp */ = {
 			isa = PBXGroup;
 			children = (
-				2B2A581C285630EF005930B2 /* AppDelegate.swift */,
-				2B2A581E285630EF005930B2 /* SceneDelegate.swift */,
-				2B2A5820285630EF005930B2 /* ViewController.swift */,
-				2B2A5822285630EF005930B2 /* Main.storyboard */,
-				2B2A58332856312B005930B2 /* data.plist */,
-				2B2A5828285630F0005930B2 /* Assets.xcassets */,
-				2B2A582A285630F0005930B2 /* LaunchScreen.storyboard */,
-				2B2A582D285630F0005930B2 /* Info.plist */,
-				2B2A5825285630EF005930B2 /* MyCarsApp.xcdatamodeld */,
+				2BFCD6F9289699A200310EF4 /* App */,
+				2BFCD6FA289699BB00310EF4 /* ViewControllers */,
+				2BFCD6FB289699C600310EF4 /* Storyboards */,
+				2BFCD6FC28969A3E00310EF4 /* Entities */,
+				2BFCD6FD28969A4700310EF4 /* Resources */,
 			);
 			path = MyCarsApp;
+			sourceTree = "<group>";
+		};
+		2BFCD6F9289699A200310EF4 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2B2A581C285630EF005930B2 /* AppDelegate.swift */,
+				2B2A581E285630EF005930B2 /* SceneDelegate.swift */,
+				2B2A582D285630F0005930B2 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2BFCD6FA289699BB00310EF4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2B2A5820285630EF005930B2 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2BFCD6FB289699C600310EF4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				2B2A5822285630EF005930B2 /* Main.storyboard */,
+				2B2A582A285630F0005930B2 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		2BFCD6FC28969A3E00310EF4 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				2B2A58332856312B005930B2 /* data.plist */,
+				2B2A5825285630EF005930B2 /* MyCarsApp.xcdatamodeld */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		2BFCD6FD28969A4700310EF4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2B2A5828285630F0005930B2 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +337,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RB3BCBLCA6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyCarsApp/Info.plist;
+				INFOPLIST_FILE = MyCarsApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -325,7 +365,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RB3BCBLCA6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MyCarsApp/Info.plist;
+				INFOPLIST_FILE = MyCarsApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
