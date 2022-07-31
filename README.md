@@ -6,6 +6,7 @@ For first install, you need to uncomment line in ```viewDidLoad``` method.
 
 In app, user can choose some car, add rating, add to favorites, and change date of last starting. 🏎
 
+
 <div align="center">
   
   [![iOS](https://img.shields.io/badge/iOS-15.5-blue)](https://www.apple.com/ru/ios/ios-15/)
